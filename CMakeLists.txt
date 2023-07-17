@@ -1,15 +1,14 @@
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.21.0)
+project(BorisMathLib VERSION 0.0.1)
+SET(THIS_VERSION 0.0.1)
 
-if( CMAKE_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+if( BorisMathLib_IS_TOP_LEVEL)
     SET(IS_TOP_DIR YES)
     SET(ENABLE_TEST YES)
-    project(BorisMathLib)
 else()
     SET(IS_TOP_DIR NO)
     SET(ENABLE_TEST NO)
 endif()
-
-SET(THIS_VERSION 0.0.1)
 
 include_directories(.)
 
