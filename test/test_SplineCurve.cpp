@@ -10,7 +10,6 @@
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
-#include <opencv2/highgui/highgui_c.h>
 
 #include <Interplot/SplineCurve.h>
 
@@ -18,13 +17,14 @@
 #define IMG_WIDTH 1200
 
 const cv::Vec3b IMG_COLOR = {0,0,0};
+const cv::Vec3b IMG_COLOR2 = {255,0,0};
 
 using namespace std;
 using namespace cv;
 
 cv::Mat img(IMG_HIGHT,IMG_WIDTH,CV_8UC3,Scalar(255,255,255));;
 enum mode{
-    launch = 0, picking = 1, showing = 2
+    launch = 0, picking = 1, showing = 2, picking2 = 3
 };
 mode curmode;
 Points::PosPoint2Ds pts;
@@ -74,11 +74,13 @@ static void dilate(Vec3b Color,int n,Mat & img)
     }
 }
 
+int MBUTTON_CNT = 0;
+Points::Pos2D target;
 void EventMouseClick(int event, int x, int y, int flags, void* ustc)
 {
-    if (event == CV_EVENT_LBUTTONDOWN)
+    if (event == EVENT_LBUTTONDOWN)
     {
-        cout<<"CV_EVENT_LBUTTONDOWN"<<endl;
+        cout<<"EVENT_LBUTTONDOWN"<<endl;
         if(curmode != picking)
         {
             x_s.clear();y_s.clear();
@@ -94,32 +96,50 @@ void EventMouseClick(int event, int x, int y, int flags, void* ustc)
         dilate(IMG_COLOR,4, img);
         imshow("Spline test",img);
     }
-    if (event == CV_EVENT_RBUTTONDOWN)
+    if (event == EVENT_RBUTTONDOWN)
     {
-        cout<<"CV_EVENT_RBUTTONDOWN"<<endl;
+        cout<<"EVENT_RBUTTONDOWN"<<endl;
         curmode = showing;
         if(x_s.size()>2&&!sp.HasData()){
             sp.setpoints(pts);
         }
 
         for(int s = 0;s<sp.max_s+1;s++){
-            vector<double> ans = sp(static_cast<double>(s));
-            if(ans[1]>0&&ans[1]<IMG_WIDTH&&ans[2]>0&&ans[2]<IMG_HIGHT){
-                img.at<Vec3b>(ans[1],ans[0]) = IMG_COLOR;
+            auto ans = sp(static_cast<double>(s));
+            if(ans.x>0&&ans.x<IMG_WIDTH&&ans.y>0&&ans.y<IMG_HIGHT){
+                img.at<Vec3b>(ans.y,ans.x) = IMG_COLOR;
             }
         }
 
         dilate(IMG_COLOR,4, img);
         imshow("Spline test",img);
     }
-
+    if (event == EVENT_MBUTTONDOWN)
+    {
+        if(curmode == showing){
+            target.x = x,target.y=y;
+            curmode = picking2;
+        }
+        else if(curmode == picking2){
+            target.phi = atan2(y-target.y,x-target.x);
+            auto s = sp.getDirectionalProjection(target,sp.max_s,0);
+            Points::PosPoint2D ans = sp(s);
+            if(ans.x>0&&ans.x<IMG_WIDTH&&ans.y>0&&ans.y<IMG_HIGHT){
+                img.at<Vec3b>(ans.y,ans.x) = IMG_COLOR2;
+                dilate(IMG_COLOR2,4, img);
+                imshow("Spline test",img);
+            }
+            curmode = showing;
+        }
+        
+    }
 }
 
 int main()
 {
     curmode = launch;
     imshow("Spline test",img);
-    cvSetMouseCallback("Spline test", EventMouseClick);
+    setMouseCallback("Spline test", EventMouseClick);
     while(1)
     {
         if(cv::waitKey(1) == 27) return 0;

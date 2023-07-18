@@ -10,6 +10,7 @@
 #ifndef _INTERPLOATION_SPLINE_CURVE_H_
 #define _INTERPLOATION_SPLINE_CURVE_H_
 
+#include<cmath>
 #include<vector>
 #include<Interplot/Spline.h>
 
@@ -17,21 +18,29 @@ namespace Interplot
 {
     class SplineCurve
     {
-        typedef Spline::RefPoints RefPoints;
     public:
+        typedef Spline::RefPoints  RefPoints;
+        typedef Points::PosPoint2D Point;
+        typedef Points::Pos2D      Pos2D;
+
         SplineCurve(){};
         ~SplineCurve(){};
         void setpoints(RefPoints refps);
-        void setSplines(Spline _s_x,Spline _s_y);
+        void setSplines(Spline _xs,Spline _ys);
+        double getProjection(Point target,double max_s,double min_s,bool NewtownRefine = true, double gridsize = 0.5);
+        double getDirectionalProjection(Pos2D target,double max_s,double min_s,bool NewtownRefine = true, double gridsize = 0.5);
         bool HasData() const  {return data_flag;}
-        std::vector<double> operator()(double s) const;
+        Point operator()(double s) const;
+        double getHeading(double s){return std::atan2(ys_.getDeriv(1,s),xs_.getDeriv(1,s));}
 
     public:
         double max_s;
 
     private:
-        Spline s_x,s_y;
+        Spline xs_,ys_;
         bool data_flag = false;
+        double getProjectionByNewton(Point target,double s_hint, double s_max);
+        double getDirectionalProjectionByNewton(Pos2D target,double s_hint, double s_max);
 
     };
     
