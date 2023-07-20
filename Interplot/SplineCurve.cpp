@@ -25,7 +25,7 @@ namespace Interplot
         return std::sqrt(distanceSq(p1,p2));
     }
 
-    void SplineCurve::setpoints(RefPoints refps){
+    void SplineCurve::setPoints(RefPoints refps){
         Spline::RefPoints points;
         vector<double> & s_list = points.x;
         vector<double> & x_list = refps.x;
