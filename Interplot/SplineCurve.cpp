@@ -25,8 +25,7 @@ namespace Interplot
         return std::sqrt(distanceSq(p1,p2));
     }
 
-    void SplineCurve::setpoints(RefPoints refps)
-    {
+    void SplineCurve::setpoints(RefPoints refps){
         Spline::RefPoints points;
         vector<double> & s_list = points.x;
         vector<double> & x_list = refps.x;
@@ -45,6 +44,32 @@ namespace Interplot
         ys_.set_boundary(Spline::FirstOrderDer,(y_list[1]-y_list[0])/s_list[1],
                          Spline::FirstOrderDer,(y_list[size-1]-y_list[size-2])/(s_list[size-1]-s_list[size-2]),true);
         
+        points.y = x_list;
+        xs_.set_points(points);
+        points.y = y_list;
+        ys_.set_points(points);
+        max_s = s_list.back();
+        data_flag = true;
+    }
+
+    void SplineCurve::setPoints(SplineCurve::RefPoints refps,double FromHeading,double ToHeading){
+        Spline::RefPoints points;
+        vector<double> & s_list = points.x;
+        vector<double> & x_list = refps.x;
+        vector<double> & y_list = refps.y;
+        assert(x_list.size()==y_list.size());
+        size_t size = x_list.size();
+        assert(size>2);
+        s_list.resize(x_list.size());
+        s_list[0] = 0;
+        for(int i=1,maxi = s_list.size(); i<maxi ;i++)
+        {
+            s_list[i] = s_list[i-1]+sqrt((x_list[i]-x_list[i-1])*(x_list[i]-x_list[i-1])+(y_list[i]-y_list[i-1])*(y_list[i]-y_list[i-1]));
+        }
+        xs_.set_boundary(Spline::FirstOrderDer,cos(FromHeading),
+                         Spline::FirstOrderDer,cos(ToHeading),true);
+        ys_.set_boundary(Spline::FirstOrderDer,sin(FromHeading),
+                         Spline::FirstOrderDer,sin(ToHeading),true);
         points.y = x_list;
         xs_.set_points(points);
         points.y = y_list;

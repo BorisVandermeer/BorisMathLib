@@ -26,4 +26,4 @@ make
 
 ## How To Use
 
-将仓库包含在工程内，使用${BORIS_MATH_LIBRARIES}、 ${BORIS_MATH_INCLUDE_DIRS}、 ${BORIS_MATH_FOUND}三个变量进行操作.
+将仓库包含在工程内，使用${BORIS_MATH_LIBRARIES}、 ${BORIS_MATH_INCLUDE_DIRS}、 ${BORIS_MATH_FOUND}三个变量进行操作。
