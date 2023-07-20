@@ -12,11 +12,14 @@ endif()
 
 include_directories(.)
 
-aux_source_directory(Points RefPoints_SRC_FILES)
-aux_source_directory(Curves Curves_SRC_FILES)
-aux_source_directory(Interplot Interpolot_SRC_FILES)
+aux_source_directory(Points    SRC_FILES_1)
+aux_source_directory(Curves    SRC_FILES_2)
+aux_source_directory(Interplot SRC_FILES_3)
+aux_source_directory(Vectors   SRC_FILES_4)
 
-add_library(BORIS_MATH_LIB ${RefPoints_SRC_FILES} ${Curves_SRC_FILES} ${Interpolot_SRC_FILES})
+SET(BORIS_MATH_SRC_FILES ${SRC_FILES_1} ${SRC_FILES_2}  ${SRC_FILES_3}  ${SRC_FILES_4})
+
+add_library(BORIS_MATH_LIB ${BORIS_MATH_SRC_FILES})
 
 if(IS_TOP_DIR)
     SET(BORIS_MATH_LIBRARIES BORIS_MATH_LIB)
