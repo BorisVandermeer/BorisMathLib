@@ -14,7 +14,7 @@ namespace PointsTools{
 
     Interplot::SplineCurve PointsGenHandller::toSplineCurve(RefPoints & points) const{
         Interplot::SplineCurve ans;
-        ans.setpoints(points);
+        ans.setPoints(points);
         return ans;
     }
         

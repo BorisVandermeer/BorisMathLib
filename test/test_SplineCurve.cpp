@@ -101,7 +101,7 @@ void EventMouseClick(int event, int x, int y, int flags, void* ustc)
         cout<<"EVENT_RBUTTONDOWN"<<endl;
         curmode = showing;
         if(x_s.size()>2&&!sp.HasData()){
-            sp.setpoints(pts);
+            sp.setPoints(pts);
         }
 
         for(int s = 0;s<sp.max_s+1;s++){
