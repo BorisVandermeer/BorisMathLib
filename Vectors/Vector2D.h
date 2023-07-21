@@ -20,6 +20,7 @@ namespace Vectors {
     public:
         Vector2D();
         Vector2D(double _x, double _y){ x = _x, y = _y;}
+        Vector2D(Points::PosPoint2D p):x(p.x),y(p.y){};
         Vector2D operator-() const;
         double operator*(const Vector2D &vector) const;
         Vector2D operator*(double scalar) const;
@@ -32,6 +33,7 @@ namespace Vectors {
         Vector2D &operator/=(double scalar);
         Vector2D &operator+=(const Vector2D &vector);
         Vector2D &operator-=(const Vector2D &vector);
+        
     public:
         double x,y;
     };
