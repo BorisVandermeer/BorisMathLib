@@ -76,8 +76,9 @@ namespace Utils
                             bool force_linear_extrapolation = false);
         // void set_points(const std::vector<double>& x, const std::vector<double>& y,bool cubic_spline = true);
         void set_points(const RefPoints &points, bool cubic_spline = true );
-                        
+        double getLastx(){return PointsData.x.back();}
         double operator()(double x) const;
+        void clear(){PointsData.clear();};
         double getDeriv(int order, double x) const;
 
     private:

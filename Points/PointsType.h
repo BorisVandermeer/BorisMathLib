@@ -30,7 +30,7 @@ namespace Points{
     struct Point2ds{ 
         std::vector<DataType> x,y;
         Point2ds() = default;
-        size_t size(){return x.size();}
+        size_t size() const {return x.size();}
         void clear(){x.clear();y.clear();}
         void push_back(Point2d<DataType> _pos){x.push_back(_pos.x);y.push_back(_pos.y);}
         void set(int idx, Point2d<DataType> _pos){x[idx]=_pos.x,y[idx]=_pos.y;}

@@ -17,6 +17,8 @@ namespace Geometry {
         typedef Vectors::Vector2D Vector2D;
       
         Line(){};
+        Line(Vector2D & _point, Vector2D & _direction):point(_point),direction(_direction){}
+        Line(Vector2D const & _point, Vector2D const & _direction):point(_point),direction(_direction){}
         Vectors::Vector2D direction;
         Vectors::Vector2D point;
     };
