@@ -12,7 +12,6 @@
 #include <iosfwd>
 #include <Points/PointsType.h>
 
-#define RVO_EPSILON (0.00001F);
 
 namespace Vectors {
 
@@ -51,5 +50,7 @@ namespace Vectors {
     double leftOf(const Vector2D &vector1, const Vector2D &vector2,const Vector2D &vector3);
 
     Vector2D normalize(const Vector2D &vector);
+
+    bool isParallel(Vector2D const & v1, Vector2D const & v2);
 
 } // namespace Vectors

@@ -14,6 +14,7 @@ namespace Geometry {
 
     class  Line {
     public:
+        typedef Vectors::Vector2D Vector2D;
       
         Line(){};
         Vectors::Vector2D direction;
