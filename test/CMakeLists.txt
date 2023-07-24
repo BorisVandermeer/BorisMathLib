@@ -13,3 +13,6 @@ target_link_libraries(test_spline_curve ${OpenCV_LIBS} ${BORIS_MATH_LIBRARIES})
 
 add_executable(test_rscurve test_RS.cpp)
 target_link_libraries(test_rscurve ${OpenCV_LIBS} ${BORIS_MATH_LIBRARIES})
+
+add_executable(test_geometry_fuctions test_GeometryFuc.cpp)
+target_link_libraries(test_geometry_fuctions ${OpenCV_LIBS} ${BORIS_MATH_LIBRARIES})

@@ -103,7 +103,11 @@ namespace Vectors {
     Vector2D normalize(const Vector2D &vector) { return vector / abs(vector); }
 
     bool isParallel(Vector2D const & v1, Vector2D const & v2){
-        if(det(v1,v2)<A_PRIVATE_VALUE) return true;
+        Vector2D v11 = v1;
+        Vector2D v22 = v2;
+        while(fabs(v11.x)+fabs(v11.y)<1) v11 = v11+v11;
+        while(fabs(v22.x)+fabs(v22.y)<1) v22 = v22+v22;
+        if(fabs(det(v1,v2))<A_PRIVATE_VALUE) return true;
         return false;
     }
 
