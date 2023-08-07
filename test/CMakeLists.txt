@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.0.2)
 
+add_subdirectory(Interplot)
+
 find_package(OpenCV REQUIRED)
 
 include_directories(${BORIS_MATH_INCLUDE_DIRS})
