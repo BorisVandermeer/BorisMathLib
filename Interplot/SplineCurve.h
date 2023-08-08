@@ -26,7 +26,9 @@ namespace Interplot
         SplineCurve(){};
         ~SplineCurve(){};
         void setPoints(RefPoints refps);
+        void setPoints(const std::vector<double> & x,const std::vector<double> & y);
         void setPoints(RefPoints refps,double FromHeading,double ToHeading);
+        void setPoints(const std::vector<double> & x,const std::vector<double> & y,double FromHeading,double ToHeading);
         void rebuild(double stepsize);
         void setSplines(Spline _xs,Spline _ys);
         double getProjection(Point target,double max_s,double min_s,bool NewtownRefine = true, double gridsize = 0.5);

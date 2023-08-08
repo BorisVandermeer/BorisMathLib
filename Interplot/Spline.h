@@ -19,7 +19,7 @@
 namespace Interplot
 {
 
-namespace Utils
+namespace
 {
     // Disposable Band Matrix class to solve "Ax=b" problems by LU decompose.
     class band_matrix {
@@ -50,7 +50,7 @@ namespace Utils
         // solves Ax=y
         std::vector<double> lu_solve(const std::vector<double> &b);
     };
-} // namespace Utils
+} // namespace <void>
 
     
     class Spline{

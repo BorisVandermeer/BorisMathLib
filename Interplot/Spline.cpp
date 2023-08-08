@@ -19,8 +19,7 @@ using namespace std;
 namespace Interplot
 {
 
-namespace Utils
-{
+namespace {
     band_matrix::band_matrix(int dim, int n_u, int n_l){resize(dim, n_u, n_l);}
 
     void band_matrix::resize(int dim, int n_u, int n_l){
@@ -149,7 +148,7 @@ namespace Utils
         if (cubic_spline == true) { // cubic spline interpolation
             // setting up the matrix and right hand side of the equation system
             // for the parameters b[]
-            Utils::band_matrix A(n, 1, 1);
+            band_matrix A(n, 1, 1);
             std::vector<double> rhs(n);
             for (int i = 1; i < n - 1; i++) {
                 A(i, i - 1) = 1.0 / 3.0 * (x[i] - x[i - 1]);

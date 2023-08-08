@@ -7,7 +7,8 @@ BorisVandermeer 的一些基础数学仓库
 ## 主要内容
 
 - 曲线模块：RS曲线
-- 插值模块：Spline 插值，Spline曲线
+- 几何模块：向量、直线与圆的算法
+- 插值模块：Spline 插值，Spline曲线,B样条插值
 - 点集模块：定义了公用的点的类型
 
 ## Run A Demo

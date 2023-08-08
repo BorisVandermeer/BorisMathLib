@@ -104,7 +104,7 @@ void EventMouseClick(int event, int x, int y, int flags, void* ustc)
                 points[2*i] = x_s[i];
                 points[2*i+1] = y_s[i];
             }
-            bsp = Interplot::BSpline(x_s.size(),2,5);
+            bsp = Interplot::BSpline(x_s.size(),2,2);
             bsp.setControlPoints(points);
         }
         double length = 0;
