@@ -23,7 +23,7 @@ namespace PointsTools{
         size_t num = RSC.TotalLength()/stepsize+1;
         double seglen = RSC.TotalLength()/RSC.radius;
         
-        for(double i=0;i<=num;i++){
+        for(double i=1;i<=num;i++){
             double v,seg = static_cast<double>(i)*seglen/num;
             double tmpx = 0,tmpy = 0,tmpphi= From.phi;
             for(int j=0;j<5&&seg>0;j++){

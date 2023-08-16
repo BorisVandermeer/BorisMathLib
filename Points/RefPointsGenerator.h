@@ -39,6 +39,7 @@ namespace PointsTools{
         Interplot::SplineCurve toSplineCurve(RefPoints & points) const;
 
         PointsGenHandller() = default;
+        // GetPoses Without the first pos
         bool GetPoses(RefPoses & points, Curves::RSCurve const RSC, double stepsize,StartPos2d From = StartPos2d(0,0,0));
 
     };
