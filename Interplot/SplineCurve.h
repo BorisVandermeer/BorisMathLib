@@ -31,11 +31,13 @@ namespace Interplot
         void setPoints(const std::vector<double> & x,const std::vector<double> & y,double FromHeading,double ToHeading);
         void rebuild(double stepsize);
         void setSplines(Spline _xs,Spline _ys);
-        double getProjection(Point target,double max_s,double min_s,bool NewtownRefine = true, double gridsize = 0.5);
-        double getDirectionalProjection(Pos2D target,double max_s,double min_s,bool NewtownRefine = true, double gridsize = 0.5);
+        double getProjection(Point target,double max_s,double min_s,bool NewtownRefine = true, double gridsize = 0.5) const;
+        double getDirectionalProjection(Pos2D target,double max_s,double min_s,bool NewtownRefine = true, double gridsize = 0.5) const;
         bool HasData() const  {return data_flag;}
         Point operator()(double s) const;
-        double getHeading(double s){return std::atan2(ys_.getDeriv(1,s),xs_.getDeriv(1,s));}
+        double getHeading(double s) const {return std::atan2(ys_.getDeriv(1,s),xs_.getDeriv(1,s));} 
+        double getCurvity(double s) const;
+        double getCutvityDeriv(double s) const;
 
     public:
         double max_s;
@@ -43,8 +45,8 @@ namespace Interplot
     private:
         Spline xs_,ys_;
         bool data_flag = false;
-        double getProjectionByNewton(Point target,double s_hint, double s_max);
-        double getDirectionalProjectionByNewton(Pos2D target,double s_hint, double s_max);
+        double getProjectionByNewton(Point target,double s_hint, double s_max) const;
+        double getDirectionalProjectionByNewton(Pos2D target,double s_hint, double s_max) const;
 
     };
     

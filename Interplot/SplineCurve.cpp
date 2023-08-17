@@ -11,8 +11,9 @@
 #include<assert.h>
 #include<Interplot/SplineCurve.h>
 
-#define NEWTOWN_ERROR (1e-5)
-#define DIVIDE_ERR    (1e-5)
+#define SPLINE_EPSILON (1e-5)
+#define NEWTOWN_ERROR SPLINE_EPSILON
+#define DIVIDE_ERR    SPLINE_EPSILON
 
 using namespace std;
 
@@ -176,7 +177,7 @@ namespace Interplot
         return Point(xs_(s),ys_(s));
     }
 
-    double SplineCurve::getProjection(Point target,double max_s,double min_s,bool NewtownRefine, double grid){
+    double SplineCurve::getProjection(Point target,double max_s,double min_s,bool NewtownRefine, double grid) const{
         if(max_s<min_s){
             return min_s;
         }
@@ -195,7 +196,7 @@ namespace Interplot
         return min_dis_s;
     }
 
-    double SplineCurve::getProjectionByNewton(Point target,double s_hint, double s_max){
+    double SplineCurve::getProjectionByNewton(Point target,double s_hint, double s_max) const{
         s_hint = std::min(s_hint,s_max);
         double s_cur  = s_hint;
         double s_prev = s_hint;
@@ -215,7 +216,7 @@ namespace Interplot
         return std::min(s_cur, s_max);
     }
 
-    double SplineCurve::getDirectionalProjection(Pos2D target,double max_s,double min_s,bool NewtownRefine, double gridsize){
+    double SplineCurve::getDirectionalProjection(Pos2D target,double max_s,double min_s,bool NewtownRefine, double gridsize) const{
         if (max_s <= min_s) return min_s;
         static const double grid = 2.0;
         double tmp_s = min_s, min_dot_value_s = min_s;
@@ -236,7 +237,7 @@ namespace Interplot
         return min_dot_value_s;
     }
     
-    double SplineCurve::getDirectionalProjectionByNewton(Pos2D target,double s_hint, double s_max){
+    double SplineCurve::getDirectionalProjectionByNewton(Pos2D target,double s_hint, double s_max) const{
         s_hint = std::min(s_hint, max_s);
         double cur_s = s_hint;
         double prev_s = s_hint;
@@ -260,6 +261,42 @@ namespace Interplot
         }
 
         return std::min(cur_s, max_s);
+    
+    }
+
+    double SplineCurve::getCurvity(double s) const{
+        auto dx  = xs_.getDeriv(1,s);
+        auto dy  = ys_.getDeriv(1,s);
+        auto ddx = xs_.getDeriv(2,s);
+        auto ddy = ys_.getDeriv(2,s);
+
+        double tmp = dx*dx+dy*dy;
+        if(fabs(tmp)<SPLINE_EPSILON){
+            return __DBL_MAX__;
+        }
+        tmp = sqrt(tmp);
+        tmp = tmp*tmp*tmp;
+
+        return (ddy*dx-dy*ddx)/tmp;
+    
+    }
+
+    double SplineCurve::getCutvityDeriv(double s) const{
+
+        // referance : https://blog.csdn.net/u013468614/article/details/108416552s
+        auto dx   = xs_.getDeriv(1,s);
+        auto dy   = ys_.getDeriv(1,s);
+        auto ddx  = xs_.getDeriv(2,s);
+        auto ddy  = ys_.getDeriv(2,s);
+        auto dddx = xs_.getDeriv(3,s);
+        auto dddy = ys_.getDeriv(3,s);
+
+        double tmp = dx*dx+dy*dy;
+        if(fabs(tmp)<SPLINE_EPSILON){
+            return __DBL_MAX__;
+        }
+        
+        return ((dddy*dx-dy*dddx)*tmp - 3*(dx*ddx+dy*ddy)*(ddy*dx-ddx*dy))/(tmp*tmp*tmp);
     
     }
     
