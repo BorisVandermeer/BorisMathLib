@@ -41,6 +41,8 @@ namespace Interplot
         {
             s_list[i] = s_list[i-1]+sqrt((x_list[i]-x_list[i-1])*(x_list[i]-x_list[i-1])+(y_list[i]-y_list[i-1])*(y_list[i]-y_list[i-1]));
         }
+        xs_.clear();
+        ys_.clear();
         xs_.set_boundary(Spline::FirstOrderDer,(x_list[1]-x_list[0])/s_list[1],
                          Spline::FirstOrderDer,(x_list[size-1]-x_list[size-2])/(s_list[size-1]-s_list[size-2]),true);
         ys_.set_boundary(Spline::FirstOrderDer,(y_list[1]-y_list[0])/s_list[1],
@@ -270,20 +272,19 @@ namespace Interplot
         auto ddx = xs_.getDeriv(2,s);
         auto ddy = ys_.getDeriv(2,s);
 
-        double tmp = dx*dx+dy*dy;
-        if(fabs(tmp)<SPLINE_EPSILON){
-            return __DBL_MAX__;
-        }
-        tmp = sqrt(tmp);
-        tmp = tmp*tmp*tmp;
+        // actually tmp=1 
+        // double tmp = dx*dx+dy*dy;
+        // tmp = sqrt(tmp);
+        // tmp = tmp*tmp*tmp;
 
-        return (ddy*dx-dy*ddx)/tmp;
+        // return (ddy*dx-dy*ddx)/tmp;
+        return (ddy*dx-dy*ddx);
     
     }
 
     double SplineCurve::getCutvityDeriv(double s) const{
 
-        // referance : https://blog.csdn.net/u013468614/article/details/108416552s
+        // referance : https://blog.csdn.net/u013468614/article/details/108416552
         auto dx   = xs_.getDeriv(1,s);
         auto dy   = ys_.getDeriv(1,s);
         auto ddx  = xs_.getDeriv(2,s);
@@ -291,12 +292,12 @@ namespace Interplot
         auto dddx = xs_.getDeriv(3,s);
         auto dddy = ys_.getDeriv(3,s);
 
-        double tmp = dx*dx+dy*dy;
-        if(fabs(tmp)<SPLINE_EPSILON){
-            return __DBL_MAX__;
-        }
+        // double tmp = dx*dx+dy*dy; // actually tmp=1
+        auto a = (dddy*dx-dy*dddx);
+        auto b = - 3*(dx*ddx+dy*ddy)*(ddy*dx-ddx*dy);
+        return a-b;
         
-        return ((dddy*dx-dy*dddx)*tmp - 3*(dx*ddx+dy*ddy)*(ddy*dx-ddx*dy))/(tmp*tmp*tmp);
+        // return ((dddy*dx-dy*dddx) - 3*(dx*ddx+dy*ddy)*(ddy*dx-ddx*dy));
     
     }
     
