@@ -21,6 +21,7 @@
 namespace Points{
     template<class DataType = double>
     struct Point2d{ 
+    public:
         DataType x,y;
         Point2d() = default;
         Point2d(DataType _x, DataType _y):x(_x),y(_y){}
@@ -39,14 +40,15 @@ namespace Points{
     };
 
     template<class DataType = double>
-    struct Point2dWithDir{ 
+    struct Point2dWithDir : public Point2d<DataType>{
+    public:
         DataType x,y,phi;
         Point2dWithDir() = default;
         Point2dWithDir(DataType _x, DataType _y, DataType _phi):x(_x),y(_y),phi(_phi){}
     };
 
     template<class DataType = double>
-    struct Point2dWithDirs{ 
+    struct Point2dWithDirs : public Point2ds<DataType>{ 
         std::vector<DataType> x,y,phi;
         Point2dWithDirs() = default;
         size_t size(){return x.size();}
