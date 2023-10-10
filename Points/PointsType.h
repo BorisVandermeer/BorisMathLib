@@ -31,10 +31,10 @@ namespace Points{
     struct Point2ds{ 
         std::vector<DataType> x,y;
         Point2ds() = default;
-        size_t size() const {return x.size();}
+        unsigned long size() const {return x.size();}
         void clear(){x.clear();y.clear();}
         void push_back(Point2d<DataType> _pos){x.push_back(_pos.x);y.push_back(_pos.y);}
-        void resize(size_t n){x.resize(n);y.resize(n);}
+        void resize(unsigned long n){x.resize(n);y.resize(n);}
         void set(int idx, Point2d<DataType> _pos){x[idx]=_pos.x,y[idx]=_pos.y;}
         Point2ds<DataType> operator [](int idx){return Point2ds<DataType>(x[idx],y[idx]);}
     };
@@ -51,10 +51,10 @@ namespace Points{
     struct Point2dWithDirs : public Point2ds<DataType>{ 
         std::vector<DataType> x,y,phi;
         Point2dWithDirs() = default;
-        size_t size(){return x.size();}
+        unsigned long size(){return x.size();}
         void clear(){x.clear();y.clear();phi.clear();};
         void push_back(Point2dWithDir<DataType> _pos){x.push_back(_pos.x);y.push_back(_pos.y);phi.push_back(_pos.phi);}
-        void resize(size_t n){x.resize(n);y.resize(n);phi.resize(n);}
+        void resize(unsigned long n){x.resize(n);y.resize(n);phi.resize(n);}
         void set(int idx, Point2dWithDir<DataType> _pos){x[idx]=_pos.x,y[idx]=_pos.y,phi[idx]=_pos.phi;}
         Point2dWithDir<DataType> operator [](int idx){return Point2dWithDir<DataType>(x[idx],y[idx],phi[idx]);}
     };
