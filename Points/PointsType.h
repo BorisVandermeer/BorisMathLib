@@ -42,9 +42,9 @@ namespace Points{
     template<class DataType = double>
     struct Point2dWithDir : public Point2d<DataType>{
     public:
-        DataType x,y,phi;
+        DataType phi;
         Point2dWithDir() = default;
-        Point2dWithDir(DataType _x, DataType _y, DataType _phi):x(_x),y(_y),phi(_phi){}
+        Point2dWithDir(DataType _x, DataType _y, DataType _phi):Point2d<DataType>(_x,_y){phi=_phi;}
     };
 
     template<class DataType = double>
