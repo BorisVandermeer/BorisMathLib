@@ -1,3 +1,4 @@
+
 /*********************************************************************
  * Author : BorisVandermeer
  * 
@@ -18,7 +19,7 @@ namespace Fitting{
         double ymean = 0.0;
 
         for(auto & x : points.x) xmean+=x;
-        for(auto & y : points.x) xmean+=y;
+        for(auto & y : points.y) ymean+=y;
 
         xmean/=points.size();
         ymean/=points.size();
@@ -27,10 +28,10 @@ namespace Fitting{
         double sumy2 = 0;
         double sumyx = 0.0;
 
-        for(auto i = points.size()-1;i>=0;i--){
-            sumx2 = (points.x[i]-xmean)*(points.x[i]-xmean);
-            sumx2 = (points.y[i]-ymean)*(points.y[i]-ymean);
-            sumyx = (points.y[i]-ymean)*(points.x[i]-xmean);
+        for(int i = points.size()-1;i>=0;i--){
+            sumx2 += (points.x[i]-xmean)*(points.x[i]-xmean);
+            sumy2 += (points.y[i]-ymean)*(points.y[i]-ymean);
+            sumyx += (points.y[i]-ymean)*(points.x[i]-xmean);
         }
 
         ans.point = Vectors::Vector2D(xmean,ymean);
@@ -39,7 +40,7 @@ namespace Fitting{
             return ans;
         }
 
-        ans.direction = Vectors::Vector2D(sumyx,sumx2);
+        ans.direction = Vectors::Vector2D(sumx2,sumyx)/std::max(sumx2,sumyx);
         return ans;
     }
     
