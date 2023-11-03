@@ -37,7 +37,7 @@ namespace Points{
         void push_back(Point2d<DataType> _pos){x.push_back(_pos.x);y.push_back(_pos.y);}
         void resize(unsigned long n){x.resize(n);y.resize(n);}
         void set(int idx, Point2d<DataType> _pos){x[idx]=_pos.x,y[idx]=_pos.y;}
-        Point2ds<DataType> operator [](int idx){return Point2ds<DataType>(x[idx],y[idx]);}
+        Point2d<DataType> operator [](int idx){return Point2d<DataType>(x[idx],y[idx]);}
     };
 
     template<class DataType = double>

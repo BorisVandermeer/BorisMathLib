@@ -13,6 +13,12 @@
 #include<limits>
 #include<Points/PointsType.h>
 
+#define ENABLE_CSC (1<<0)
+#define ENABLE_CCC (1<<1)
+#define ENABLE_CCCC (1<<2)
+#define ENABLE_CCSC (1<<3)
+#define ENABLE_CCSCC (1<<4)
+
 namespace Curves{
     
     enum RSCurveSegmentType
@@ -48,8 +54,8 @@ namespace Curves{
         typedef Points::Pos2D Pos2d;
         typedef Pos2d State;
 
-        RSCurve RSCurveCalc(double x,double y,double phi) const;
-        RSCurve RSCurveCalc(State & from, State & to) const;
+        RSCurve RSCurveCalc(double x,double y,double phi, unsigned int CurveType = 0xFF) const;
+        RSCurve RSCurveCalc(State & from, State & to,unsigned int CurveType = 0xFF) const;
         double getRadius() const {return radius_;};
         void setRadius(double turningRadius){radius_ = turningRadius;};
     protected:

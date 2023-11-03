@@ -23,8 +23,9 @@ aux_source_directory(Interplot SRC_FILES_3)
 aux_source_directory(Interplot/tinyspline SRC_FILES_3_1)
 aux_source_directory(Vectors   SRC_FILES_4)
 aux_source_directory(Geometry  SRC_FILES_5)
+aux_source_directory(Fitting   SRC_FILES_6)
 
-SET(BORIS_MATH_SRC_FILES ${SRC_FILES_1} ${SRC_FILES_2}  ${SRC_FILES_3} ${SRC_FILES_3_1}  ${SRC_FILES_4} ${SRC_FILES_5})
+SET(BORIS_MATH_SRC_FILES ${SRC_FILES_1} ${SRC_FILES_2}  ${SRC_FILES_3} ${SRC_FILES_3_1}  ${SRC_FILES_4} ${SRC_FILES_5} ${SRC_FILES_6})
 
 add_library(BORIS_MATH_LIB ${BORIS_MATH_SRC_FILES})
 

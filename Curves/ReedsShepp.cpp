@@ -461,14 +461,13 @@ namespace
                                                         .5 * pi, -v); 
     }
 
-    Curves::RSCurve reedsShepp(double x, double y, double phi)
-    {
+    Curves::RSCurve reedsShepp(double x, double y, double phi,unsigned int CurveType = 0xFF){
         Curves::RSCurve path;
-        CSC(x, y, phi, path);
-        CCC(x, y, phi, path);
-        CCCC(x, y, phi, path);
-        CCSC(x, y, phi, path);
-        CCSCC(x, y, phi, path);
+        if(CurveType&ENABLE_CSC)   CSC(x, y, phi, path);
+        if(CurveType&ENABLE_CCC)   CCC(x, y, phi, path);
+        if(CurveType&ENABLE_CCCC)  CCCC(x, y, phi, path);
+        if(CurveType&ENABLE_CCSC)  CCSC(x, y, phi, path);
+        if(CurveType&ENABLE_CCSCC) CCSCC(x, y, phi, path);
         return path;
     }
 }
@@ -485,19 +484,19 @@ namespace Curves
         radius = _radius;
     }
 
-    RSCurve RSCurveStateSpace::RSCurveCalc(double x,double y,double phi) const{
-        RSCurve ans =  ::reedsShepp(x / radius_, y / radius_, phi);
+    RSCurve RSCurveStateSpace::RSCurveCalc(double x,double y,double phi,unsigned int CurveType) const{
+        RSCurve ans =  ::reedsShepp(x / radius_, y / radius_, phi,CurveType);
         ans.radius = radius_;
         return ans;
     }
 
-    RSCurve RSCurveStateSpace::RSCurveCalc(State &from, State &to) const{
+    RSCurve RSCurveStateSpace::RSCurveCalc(State &from, State &to,unsigned int CurveType) const{
         State *s1 = &from, *s2 = &to;
         double x1 = s1->x, y1 = s1->y, th1 = s1->phi;
         double x2 = s2->x, y2 = s2->y, th2 = s2->phi;
         double dx = x2 - x1, dy = y2 - y1, c = cos(th1), s = sin(th1);
         double x = c * dx + s * dy, y = -s * dx + c * dy, phi = th2 - th1;
-        return RSCurveCalc(x,y,phi);
+        return RSCurveCalc(x,y,phi,CurveType);
     }
 
 
