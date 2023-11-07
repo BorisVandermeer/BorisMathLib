@@ -11,6 +11,7 @@
 #include<vector>
 #include<Interplot/SplineCurve.h>
 #include<Curves/ReedsShepp.h>
+#include<Curves/Dubins.h>
 
 namespace PointsTools{
 
@@ -39,8 +40,13 @@ namespace PointsTools{
         Interplot::SplineCurve toSplineCurve(RefPoints & points) const;
 
         PointsGenHandller() = default;
+
+        Pos2d GetPose(Curves::RSCurve const RSC, double s,StartPos2d From = StartPos2d(0,0,0)) const;
+        Pos2d GetPose(Curves::DubinsSpace::DubinsPath const _DBC, double s,StartPos2d From = StartPos2d(0,0,0)) const;
+
         // GetPoses Without the first pos
-        bool GetPoses(RefPoses & points, Curves::RSCurve const RSC, double stepsize,StartPos2d From = StartPos2d(0,0,0));
+        bool GetPoses(RefPoses & points, Curves::RSCurve const RSC, double stepsize,StartPos2d From = StartPos2d(0,0,0)) const;
+        bool GetPoses(RefPoses & points, Curves::DubinsSpace::DubinsPath const _DBC, double stepsize,StartPos2d From = StartPos2d(0,0,0)) const;
 
     };
     
